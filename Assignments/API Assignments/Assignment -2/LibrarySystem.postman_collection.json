@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6828e767-7027-4cc5-96e8-b8d2b619d925",
+		"_postman_id": "932e9d9c-285c-4c1f-ad06-266015a281bf",
 		"name": "LibrarySystem",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "34898140"
@@ -8,6 +8,18 @@
 	"item": [
 		{
 			"name": "Returns the status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -25,6 +37,18 @@
 		},
 		{
 			"name": "Returns a list of books",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -47,8 +71,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"var bookData = pm.response.json()\r",
-							"pm.environment.set(\"bookID\",bookData.id)"
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -71,13 +94,54 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/books/5",
+					"raw": "{{url}}/books/2",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"books",
-						"5"
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register  API client",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var accessData = pm.response.json()\r",
+							"pm.environment.set(\"AccessToken\",accessData.accessToken)\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"clientName\": \"tamima\",\r\n    \"clientEmail\": \"tamima@example.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api-clients",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api-clients"
 					]
 				}
 			},
@@ -91,7 +155,9 @@
 					"script": {
 						"exec": [
 							"var orderData = pm.response.json()\r",
-							"pm.environment.set(\"OrderId\",orderData.orderId)"
+							"pm.environment.set(\"OrderId\",orderData.orderId)\r",
+							"\r",
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -110,23 +176,10 @@
 					]
 				},
 				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
-						"key": "Cookie",
-						"value": "token={{AccessToken}}"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"bookId\": \"3\",\r\n    \"customerName\": \"nabila\"\r\n}",
+					"raw": "{\r\n    \"bookId\": 6,\r\n    \"customerName\": \"{{$randomFullName}}\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -134,13 +187,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{url}}/orders/",
+					"raw": "{{url}}/orders",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"orders",
-						""
+						"orders"
 					]
 				}
 			},
@@ -148,6 +200,69 @@
 		},
 		{
 			"name": "view all orders.",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{AccessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"bookId\": 6,\r\n    \"customerName\": \"{{$randomFullName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/orders",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "view an existing order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -165,55 +280,19 @@
 				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
-						"value": "application/ecmascript"
-					},
-					{
-						"key": "Accept",
-						"value": "application/json"
-					},
-					{
 						"key": "Cookie",
-						"value": "orderId={{OrderId}}"
+						"value": "order={{OrderId}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Viscount Who Loved Me you\",\r\n    \"author\": \"Julia Quinny\",\r\n    \"type\": \"fiction II\",\r\n    \"price\": 15.69,\r\n    \"current-stock\": 1041,\r\n    \"available\": true\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": {
-					"raw": "{{url}}/orders/",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"orders",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "view an existing order",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{AccessToken}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
 				"url": {
 					"raw": "{{url}}/orders/{{OrderId}}",
 					"host": [
@@ -229,6 +308,18 @@
 		},
 		{
 			"name": "Update an existing order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -243,24 +334,13 @@
 				"method": "PATCH",
 				"header": [
 					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "Accept",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
 						"key": "Cookie",
-						"value": "token={{AccessToken}}",
-						"type": "text"
+						"value": "order={{OrderId}}"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "  {\r\n        \"customerName\": \"farianabila\"\r\n  }",
+					"raw": "{\r\n        \"customerName\": \"farianabila\"\r\n  }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -282,6 +362,18 @@
 		},
 		{
 			"name": "Delete an existing order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -296,21 +388,19 @@
 				"method": "DELETE",
 				"header": [
 					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "Accept",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
 						"key": "Cookie",
-						"value": "token={{AccessToken}}",
-						"type": "text"
+						"value": "order={{OrderId}}"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "{{url}}/orders/{{OrderId}}",
 					"host": [
@@ -323,46 +413,12 @@
 				}
 			},
 			"response": []
-		},
+		}
+	],
+	"variable": [
 		{
-			"name": "register  API client",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"var accessData = pm.response.json()\r",
-							"pm.environment.set(\"AccessToken\",accessData.accessToken)"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"clientName\": \"nabilaa\",\r\n    \"clientEmail\": \"nabilaaa@test.com\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{url}}/api-clients/",
-					"host": [
-						"{{url}}"
-					],
-					"path": [
-						"api-clients",
-						""
-					]
-				}
-			},
-			"response": []
+			"key": "url",
+			"value": "https://simple-books-api.glitch.me"
 		}
 	]
 }
